@@ -10,6 +10,33 @@ public class ToDoItem {
     private String title;
     private Date deadline;
     private String notes;
+    private int item_id;
+    private String status;
+    private String priority;
+
+    public int getItem_id() {
+        return item_id;
+    }
+
+    public void setItem_id(int item_id) {
+        this.item_id = item_id;
+    }
+
+    public String getPriority() {
+        return priority;
+    }
+
+    public void setPriority(String priority) {
+        this.priority = priority;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public String getTitle() {
         return title;

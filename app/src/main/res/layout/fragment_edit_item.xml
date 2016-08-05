@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/edit_task_title_label"
+        android:id="@+id/tvEditTask"
+        android:layout_alignParentTop="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Add_Title_Label"
+        android:id="@+id/tvEditTitle"
+        android:layout_below="@+id/tvEditTask"
+        android:layout_alignLeft="@+id/tvEditTask"
+        android:layout_alignStart="@+id/tvEditTask" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Add_Deadline_Label"
+        android:id="@+id/tvEditDeadline"
+        android:layout_marginTop="33dp"
+        android:layout_below="@+id/tvEditTitle"
+        android:layout_alignLeft="@+id/tvEditTitle"
+        android:layout_alignStart="@+id/tvEditTitle" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Add_Status_Label"
+        android:id="@+id/tvEditStatus"
+        android:layout_marginBottom="39dp"
+        android:layout_above="@+id/tvEditPriority"
+        android:layout_alignLeft="@+id/tvEditNote"
+        android:layout_alignStart="@+id/tvEditNote" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Add_Priority_Label"
+        android:id="@+id/tvEditPriority"
+        android:layout_above="@+id/btnEditSave"
+        android:layout_alignLeft="@+id/tvEditStatus"
+        android:layout_alignStart="@+id/tvEditStatus" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnEditSave"
+        style="?android:attr/borderlessButtonStyle"
+        android:drawableTop="@drawable/save_button_icon"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/dpEditDeadline"
+        android:layout_alignEnd="@+id/dpEditDeadline" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Add_Notes_Label"
+        android:id="@+id/tvEditNote"
+        android:layout_alignTop="@+id/etEditNotes"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/etEditTitle"
+        android:layout_alignTop="@+id/tvEditTitle"
+        android:layout_toRightOf="@+id/tvEditDeadline" />
+
+    <DatePicker
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/dpEditDeadline"
+        android:layout_toRightOf="@+id/tvEditDeadline"
+        android:datePickerMode="calendar"
+        android:foregroundGravity="top|fill"
+        android:calendarViewShown="true"
+        android:scrollIndicators="start|right"
+        android:scaleY="0.6"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spEditPriority"
+        android:layout_below="@+id/tvEditStatus"
+        android:spinnerMode="dropdown"
+        android:layout_alignLeft="@+id/dpEditDeadline"
+        android:layout_alignStart="@+id/dpEditDeadline"
+        android:entries="@array/spinnerPriority"/>
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spEditStatus"
+        android:spinnerMode="dialog"
+        android:layoutMode="opticalBounds"
+        android:gravity="top"
+        android:layout_alignTop="@+id/tvEditStatus"
+        android:layout_toRightOf="@+id/tvEditDeadline"
+        android:layout_toEndOf="@+id/tvEditDeadline"
+        android:entries="@array/spinnerStatus" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/etEditNotes"
+        android:layout_above="@+id/spEditStatus"
+        android:layout_toRightOf="@+id/tvEditTask"
+        android:layout_toEndOf="@+id/tvEditTask" />
+
+</RelativeLayout>

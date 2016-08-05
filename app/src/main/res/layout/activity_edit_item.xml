@@ -13,10 +13,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/etEditItemText"
-        android:layout_marginTop="33dp"
+        android:layout_marginTop="28dp"
         android:layout_below="@+id/tvEditItemLabel"
-        android:layout_alignLeft="@+id/tvEditItemLabel"
-        android:layout_alignStart="@+id/tvEditItemLabel" />
+        android:layout_toRightOf="@+id/textView3"
+        android:layout_toEndOf="@+id/textView3" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -24,9 +24,9 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/edit_item_label"
         android:id="@+id/tvEditItemLabel"
-        android:layout_marginTop="33dp"
-        android:layout_marginLeft="27dp"
-        android:layout_marginStart="27dp"
+        android:layout_marginTop="29dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginStart="32dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
@@ -36,9 +36,75 @@
         android:layout_height="wrap_content"
         android:text="@string/save_button_label"
         android:id="@+id/btnSaveEditItem"
-        android:layout_marginTop="27dp"
+        android:onClick="onSave"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/etEditItemText"
+        android:layout_alignStart="@+id/etEditItemText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/edit_item_title_label"
+        android:id="@+id/textView2"
+        android:layout_alignTop="@+id/etEditItemText"
+        android:layout_alignLeft="@+id/tvEditItemLabel"
+        android:layout_alignStart="@+id/tvEditItemLabel" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Edit_Deadline_Label"
+        android:id="@+id/textView3"
         android:layout_below="@+id/etEditItemText"
+        android:layout_alignLeft="@+id/textView2"
+        android:layout_alignStart="@+id/textView2" />
+
+    <DatePicker
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/datePicker"
+        android:layout_alignTop="@+id/textView3"
         android:layout_alignLeft="@+id/etEditItemText"
         android:layout_alignStart="@+id/etEditItemText"
-        android:onClick="onSave" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Edit_Notes_Label"
+        android:id="@+id/textView4"
+        android:layout_below="@+id/textView3"
+        android:layout_alignLeft="@+id/textView3"
+        android:layout_alignStart="@+id/textView3"
+        android:layout_marginTop="34dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Edit_Status_Label"
+        android:id="@+id/textView5"
+        android:layout_marginBottom="57dp"
+        android:layout_above="@+id/textView6"
+        android:layout_alignLeft="@+id/textView4"
+        android:layout_alignStart="@+id/textView4" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Edit_Priority_Label"
+        android:id="@+id/textView6"
+        android:layout_above="@+id/btnSaveEditItem"
+        android:layout_alignLeft="@+id/textView5"
+        android:layout_alignStart="@+id/textView5" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner"
+        android:layout_alignTop="@+id/textView5"
+        android:layout_toRightOf="@+id/etEditItemText"
+        android:layout_toEndOf="@+id/etEditItemText"
+        android:spinnerMode="dropdown" />
+
 </RelativeLayout>

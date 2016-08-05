@@ -1,9 +1,27 @@
 <resources>
-    <string name="app_name">To Do App</string>
+    <string name="app_name">Just Do It</string>
     <string name="action_settings">Settings</string>
     <string name="add">Add</string>
     <string name="add_item">Add a new item...</string>
     <string name="on_add">onAdd</string>
-    <string name="edit_item_label">Edit Item Below</string>
+    <string name="edit_item_label">Edit Task Below</string>
     <string name="save_button_label">Save</string>
+    <string name="title_activity_splash_screen">Just Do It</string>
+    <string name="splash_screen_label">Just Do It</string>
+    <string name="edit_item_title_label">Title</string>
+    <string name="Edit_Deadline_Label">Deadline</string>
+    <string name="Edit_Notes_Label">Notes</string>
+    <string name="Edit_Status_Label">Status</string>
+    <string name="Edit_Priority_Label">Priority</string>
+    <string name="Add_Title_Label">Title</string>
+    <string name="Add_Notes_Label">Notes</string>
+    <string name="Add_Deadline_Label">Deadline</string>
+    <string name="Add_Status_Label">Status</string>
+    <string name="Add_Priority_Label">Priority</string>
+    <string name="Add_Buttone_Label">Add</string>
+    <string name="New_Item_Label">New Task</string>
+    <string name="edit_task_title_label">Task</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -2,6 +2,7 @@ package com.example.trandhawa.todoapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -17,15 +18,19 @@ import org.apache.commons.io.FileUtils;
 
 import java.io.*;
 
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static ArrayList<String> items;
-    ArrayAdapter<String> itemsArrAdapter;
+    private static ArrayList<ToDoItem> items;
+    ArrayAdapter<ToDoItem> itemsArrAdapter;
     private EditText etNewItem;
     private ListView lvItems;
-    private final int REQUEST_CODE = 20;
+    private final int REQUEST_CODE_ADD = 20;
+    private final int REQUEST_CODE_EDIT = 30;
     private static int editIndex;
 
     @Override
@@ -34,9 +39,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        items = new ArrayList<ToDoItem>();
         readItems();
-        items = new ArrayList<String>();
-        itemsArrAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,items);
+//        itemsArrAdapter = new ArrayAdapter<ToDoItem>(this,android.R.layout.simple_list_item_1,items);
+        itemsArrAdapter = new ToDoArrayAdapter(this, items);
         lvItems = (ListView) findViewById(R.id.lvItems);
         lvItems.setAdapter(itemsArrAdapter);
 
@@ -56,23 +63,41 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Intent editScrnIntent = new Intent(MainActivity.this, EditItemActivity.class);
-                editIndex = position;
-                editScrnIntent.putExtra("ItemTitle", items.get(position).toString());
-                startActivityForResult(editScrnIntent, REQUEST_CODE);
+//                Intent editScrnIntent = new Intent(MainActivity.this, EditItemActivity.class);
+//                editIndex = position;
+//                editScrnIntent.putExtra("ItemTitle", items.get(position).toString());
+//                startActivityForResult(editScrnIntent, REQUEST_CODE_EDIT);
+                showEditDialog(items.get(position));
+
             }
         });
+    }
+
+    private void showEditDialog(ToDoItem i){
+        FragmentManager fragMan = getSupportFragmentManager();
+        EditItemDialogFragment edtItemFrag = EditItemDialogFragment.newInstance(i.getTitle(),i.getDeadline(),i.getStatus(),i.getPriority(),i.getNotes());
+        edtItemFrag.show(fragMan, "fragment_edit_item");
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(resultCode == RESULT_OK && REQUEST_CODE == requestCode){
+        if(resultCode == RESULT_OK && REQUEST_CODE_ADD == requestCode){
 
-            String editedItem = data.getExtras().getString("ItemTitle");
-            items.set(editIndex, editedItem);
-            Log.d("RETURNED_DATA", "*********************EDITED_ITEM: "+editedItem);
+//            ToDoItem editedItem = data.getExtras().getString("ItemTitle");
+            ToDoItem editedItem = new ToDoItem();
+            editedItem.setTitle(data.getStringExtra("Title"));
+            String strDeadline = data.getStringExtra("Deadline");
+            SimpleDateFormat dtFormat = new SimpleDateFormat("EEE, MMM d, ''yy");
+            Date deadlineDate = dtFormat.parse(strDeadline, new ParsePosition(0));
+            editedItem.setDeadline(deadlineDate);
+            editedItem.setNotes(data.getStringExtra("Notes"));
+            editedItem.setStatus(data.getStringExtra("Status"));
+            editedItem.setPriority(data.getStringExtra("Priority"));
+
+            items.add(editedItem);
+            Log.d("RETURNED_DATA", "*********************EDITED_ITEM: "+items.size());
             Log.d("RETURNED_DATA", "*********************EDITED_INDEX: "+editIndex);
             itemsArrAdapter.notifyDataSetChanged();
             writeItems();
@@ -102,21 +127,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onAdd(View view) {
-        String newItem;
-        etNewItem = (EditText) findViewById(R.id.etEditText);
-        newItem = etNewItem.getText().toString();
-        items.add(newItem);
-        etNewItem.setText("");
-        etNewItem.requestFocus();
-        writeItems();
+//        String newItem;
+//        etNewItem = (EditText) findViewById(R.id.etEditText);
+//        newItem = etNewItem.getText().toString();
+////        items.add(newItem);
+//        etNewItem.setText("");
+//        etNewItem.requestFocus();
+//        writeItems();
+
+        Intent toAddActivity = new Intent(MainActivity.this, AddItemActivity.class);
+        startActivityForResult(toAddActivity, REQUEST_CODE_ADD);
     }
 
     private void readItems(){
         File filesDir = getFilesDir();
         File file = new File(filesDir, "ToDo.txt");
         try{
-            items = new ArrayList<String>(FileUtils.readLines(file));
-        } catch(IOException e){
+//            items = new ArrayList<ToDoItem>(FileUtils.readLines(file));
+            items = SQLiteDatabaseHandler.getInstance(this).getAllItems();
+        } catch(Exception e){
 
         }
     }

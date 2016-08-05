@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.trandhawa.todoapp.AddItemActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/New_Item_Label"
+        android:id="@+id/tvAddNewTask"
+        android:layout_alignParentTop="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Add_Title_Label"
+        android:id="@+id/tvAddTitle"
+        android:layout_below="@+id/tvAddNewTask"
+        android:layout_alignLeft="@+id/tvAddNewTask"
+        android:layout_alignStart="@+id/tvAddNewTask" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Add_Deadline_Label"
+        android:id="@+id/tvAddDeadline"
+        android:layout_marginTop="33dp"
+        android:layout_below="@+id/tvAddTitle"
+        android:layout_alignLeft="@+id/tvAddTitle"
+        android:layout_alignStart="@+id/tvAddTitle" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Add_Status_Label"
+        android:id="@+id/tvAddStatus"
+        android:layout_marginBottom="39dp"
+        android:layout_above="@+id/tvAddPriority"
+        android:layout_alignLeft="@+id/tvAddNote"
+        android:layout_alignStart="@+id/tvAddNote" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Add_Priority_Label"
+        android:id="@+id/tvAddPriority"
+        android:layout_above="@+id/btnSave"
+        android:layout_alignLeft="@+id/tvAddStatus"
+        android:layout_alignStart="@+id/tvAddStatus" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnSave"
+        style="?android:attr/borderlessButtonStyle"
+        android:drawableTop="@drawable/save_button_icon"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/dpDeadline"
+        android:layout_alignEnd="@+id/dpDeadline" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Add_Notes_Label"
+        android:id="@+id/tvAddNote"
+        android:layout_alignTop="@+id/etNotes"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/etTitle"
+        android:layout_alignTop="@+id/tvAddTitle"
+        android:layout_toRightOf="@+id/tvAddDeadline" />
+
+    <DatePicker
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/dpDeadline"
+        android:layout_toRightOf="@+id/tvAddDeadline"
+        android:datePickerMode="calendar"
+        android:foregroundGravity="top|fill"
+        android:calendarViewShown="true"
+        android:scrollIndicators="start|right"
+        android:scaleY="0.6"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spPriority"
+        android:layout_below="@+id/tvAddStatus"
+        android:spinnerMode="dropdown"
+        android:layout_alignLeft="@+id/dpDeadline"
+        android:layout_alignStart="@+id/dpDeadline"
+        android:entries="@array/spinnerPriority"/>
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spStatus"
+        android:spinnerMode="dialog"
+        android:layoutMode="opticalBounds"
+        android:gravity="top"
+        android:layout_alignTop="@+id/tvAddStatus"
+        android:layout_toRightOf="@+id/tvAddDeadline"
+        android:layout_toEndOf="@+id/tvAddDeadline"
+        android:entries="@array/spinnerStatus" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/etNotes"
+        android:layout_above="@+id/spStatus"
+        android:layout_toRightOf="@+id/tvAddNewTask"
+        android:layout_toEndOf="@+id/tvAddNewTask" />
+
+</RelativeLayout>
