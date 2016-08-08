@@ -13,17 +13,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-
 import org.apache.commons.io.FileUtils;
-
 import java.io.*;
-
-import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements EditItemDialogFragment.EditItemDialogListener {
 
     private static ArrayList<ToDoItem> items;
     ArrayAdapter<ToDoItem> itemsArrAdapter;
@@ -53,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 items.remove(position);
                 itemsArrAdapter.notifyDataSetChanged();
-                writeItems();
+//                writeItems();
                 return true;
             }
         });
@@ -67,16 +63,17 @@ public class MainActivity extends AppCompatActivity {
 //                editIndex = position;
 //                editScrnIntent.putExtra("ItemTitle", items.get(position).toString());
 //                startActivityForResult(editScrnIntent, REQUEST_CODE_EDIT);
-                showEditDialog(items.get(position));
+                showEditDialog(items.get(position), position);
 
             }
         });
     }
 
-    private void showEditDialog(ToDoItem i){
+    private void showEditDialog(ToDoItem i, int index){
         FragmentManager fragMan = getSupportFragmentManager();
-        EditItemDialogFragment edtItemFrag = EditItemDialogFragment.newInstance(i.getTitle(),i.getDeadline(),i.getStatus(),i.getPriority(),i.getNotes());
+        EditItemDialogFragment edtItemFrag = EditItemDialogFragment.newInstance(i.getTitle(),i.getDeadline(),i.getStatus(),i.getPriority(),i.getNotes(),index);
         edtItemFrag.show(fragMan, "fragment_edit_item");
+//        edtItemFrag.setTargetFragment(edtItemFrag, REQUEST_CODE_EDIT);
     }
 
     @Override
@@ -89,18 +86,22 @@ public class MainActivity extends AppCompatActivity {
             ToDoItem editedItem = new ToDoItem();
             editedItem.setTitle(data.getStringExtra("Title"));
             String strDeadline = data.getStringExtra("Deadline");
-            SimpleDateFormat dtFormat = new SimpleDateFormat("EEE, MMM d, ''yy");
-            Date deadlineDate = dtFormat.parse(strDeadline, new ParsePosition(0));
+            SimpleDateFormat dtFormat = new SimpleDateFormat("MM/dd/yyyy");
+            Date deadlineDate = null;
+            try{
+                deadlineDate = dtFormat.parse(strDeadline);
+            } catch(Exception e) {
+
+            }
+
             editedItem.setDeadline(deadlineDate);
             editedItem.setNotes(data.getStringExtra("Notes"));
             editedItem.setStatus(data.getStringExtra("Status"));
             editedItem.setPriority(data.getStringExtra("Priority"));
 
             items.add(editedItem);
-            Log.d("RETURNED_DATA", "*********************EDITED_ITEM: "+items.size());
-            Log.d("RETURNED_DATA", "*********************EDITED_INDEX: "+editIndex);
             itemsArrAdapter.notifyDataSetChanged();
-            writeItems();
+//            writeItems();
         }
     }
 
@@ -127,26 +128,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onAdd(View view) {
-//        String newItem;
-//        etNewItem = (EditText) findViewById(R.id.etEditText);
-//        newItem = etNewItem.getText().toString();
-////        items.add(newItem);
-//        etNewItem.setText("");
-//        etNewItem.requestFocus();
-//        writeItems();
-
         Intent toAddActivity = new Intent(MainActivity.this, AddItemActivity.class);
         startActivityForResult(toAddActivity, REQUEST_CODE_ADD);
     }
 
     private void readItems(){
-        File filesDir = getFilesDir();
-        File file = new File(filesDir, "ToDo.txt");
+//        File filesDir = getFilesDir();
+//        File file = new File(filesDir, "ToDo.txt");
         try{
 //            items = new ArrayList<ToDoItem>(FileUtils.readLines(file));
             items = SQLiteDatabaseHandler.getInstance(this).getAllItems();
+            Log.d("MainActivity", "No of items read: " + items.size());
         } catch(Exception e){
-
+            Log.d("MainActivity", "Exception while reading items from db: "+e);
         }
     }
 
@@ -156,7 +150,26 @@ public class MainActivity extends AppCompatActivity {
         try{
             FileUtils.writeLines(file, items);
         } catch(IOException e){
-
+            Log.d("MainActivity", "Exception while writing items to db: "+e);
         }
+    }
+
+    @Override
+    public void onFinishEditDialog(String title, String deadline, String notes, String status, String priority, int index) {
+
+        items.get(index).setTitle(title);
+        items.get(index).setNotes(notes);
+        items.get(index).setStatus(status);
+        items.get(index).setPriority(priority);
+        SimpleDateFormat simpDF = new SimpleDateFormat("MM/dd/yyyy");
+        Date deadlineModified = null;
+        try{
+            deadlineModified = simpDF.parse(deadline);
+        } catch(Exception e) {
+        }
+
+        items.get(index).setDeadline(deadlineModified);
+        itemsArrAdapter.notifyDataSetChanged();
+//        writeItems();
     }
 }

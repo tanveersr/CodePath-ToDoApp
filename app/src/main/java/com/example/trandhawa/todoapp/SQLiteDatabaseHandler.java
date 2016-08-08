@@ -73,6 +73,8 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXITS " + TABLE_ITEMS);
     }
 
+
+
     public long addItem(ToDoItem item) {
 
         SQLiteDatabase db = getWritableDatabase();
@@ -88,7 +90,7 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
             values.put(KEY_PRIORITY, item.getPriority());
             values.put(KEY_NOTES, item.getNotes());
 
-            String deadlineDate = new SimpleDateFormat("YYYY-MM-DD").format(item.getDeadline());
+            String deadlineDate = new SimpleDateFormat("MM/dd/yyyy").format(item.getDeadline());
             values.put(KEY_DEADLINE, deadlineDate);
 
             int rows = db.update(TABLE_ITEMS, values, KEY_ITEM_ID + " = ? " , new String[]{item.getItem_id()+""});
@@ -107,6 +109,7 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
         return item_id;
     }
 
+
     public ArrayList<ToDoItem> getAllItems(){
 
         ArrayList<ToDoItem> allItems = new ArrayList<ToDoItem>();
@@ -123,7 +126,7 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
                     ToDoItem tempItem = new ToDoItem();
                     tempItem.setItem_id(cursor.getInt(cursor.getColumnIndex(KEY_ITEM_ID)));
                     String strDate = cursor.getString(cursor.getColumnIndex(KEY_DEADLINE));
-                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                    SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
                     try {
                         Date date = format.parse(strDate);
                         tempItem.setDeadline(date);
@@ -135,16 +138,18 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
                     tempItem.setStatus(cursor.getString(cursor.getColumnIndex(KEY_STATUS)));
                     tempItem.setTitle(cursor.getString(cursor.getColumnIndex(KEY_ITEM_TITLE)));
 
-                    allItems.add(tempItem);
+                    allItems.add(tempItem) ;
 
                 } while (cursor.moveToNext());
             }
         } catch(Exception e){
+            Log.d("SQLiteDatabaseHandler", "Exception while getting all items: " + e);
 
         } finally {
 
         }
 
+        Log.d("SQLiteDatabaseHandler", "No of items : " + allItems.size());
         return allItems;
     }
 

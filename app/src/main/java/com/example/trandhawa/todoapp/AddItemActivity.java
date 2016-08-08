@@ -8,9 +8,6 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
-
-import java.text.DateFormat;
-import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -42,7 +39,7 @@ public class AddItemActivity extends AppCompatActivity {
                 int   month= dpDeadline.getMonth();
                 int   year = dpDeadline.getYear();
 
-                SimpleDateFormat mySimpleDateFormat = new SimpleDateFormat("EEE, MMM d, ''yy");
+                SimpleDateFormat mySimpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
                 String deadline = mySimpleDateFormat.format(new Date(year, month, day));
 
                 etNotes = (EditText) findViewById(R.id.etNotes);
@@ -60,6 +57,16 @@ public class AddItemActivity extends AppCompatActivity {
                 updatedItem.putExtra("Priority", priority);
 
                 setResult(RESULT_OK, updatedItem);
+
+                ToDoItem newItem = new ToDoItem();
+                newItem.setDeadline(new Date(year, month, day));
+                newItem.setTitle(title);
+                newItem.setStatus(status);
+                newItem.setPriority(priority);
+                newItem.setNotes(notes);
+
+                SQLiteDatabaseHandler.getInstance(getApplicationContext()).addItem(newItem);
+
                 AddItemActivity.this.finish();
             }
         });
