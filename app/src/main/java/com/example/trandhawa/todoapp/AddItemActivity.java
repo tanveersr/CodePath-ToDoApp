@@ -58,15 +58,6 @@ public class AddItemActivity extends AppCompatActivity {
 
                 setResult(RESULT_OK, updatedItem);
 
-//                ToDoItem newItem = new ToDoItem();
-//                newItem.setDeadline(new Date(year, month, day));
-//                newItem.setTitle(title);
-//                newItem.setStatus(status);
-//                newItem.setPriority(priority);
-//                newItem.setNotes(notes);
-//
-//                SQLiteDatabaseHandler.getInstance(getApplicationContext()).addItem(newItem);
-
                 AddItemActivity.this.finish();
             }
         });
