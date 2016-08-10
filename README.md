@@ -30,8 +30,6 @@ Here's a walkthrough of implemented user stories:
 
 ![YAP](http://imgur.com/4LEqung.gif)
 
-<img src='http://imgur.com/4LEqung' title='JustDoIt ToDoApp Video Walkthrough' alt='JustDoIt ToDoApp Video Walkthrough' />
-
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## License
