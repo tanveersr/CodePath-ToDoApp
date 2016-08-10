@@ -28,9 +28,9 @@ The following **optional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-![](http://imgur.com/a/OOYZZ)
+![](http://imgur.com/4LEqung)
 
-<img src='http://imgur.com/a/OOYZZ' title='JustDoIt ToDoApp Video Walkthrough' width='200' alt='JustDoIt ToDoApp Video Walkthrough' />
+<img src='http://imgur.com/4LEqung' title='JustDoIt ToDoApp Video Walkthrough' width='200' alt='JustDoIt ToDoApp Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
