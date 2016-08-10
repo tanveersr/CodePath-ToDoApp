@@ -30,7 +30,8 @@ public class EditItemDialogFragment extends DialogFragment implements TextView.O
     private Spinner spEditStatus;
     private Spinner spEditPriority;
     private Button btnEditSave;
-    private int index;
+    private static int position;
+    private static long item_id;
 
     @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -50,7 +51,7 @@ public class EditItemDialogFragment extends DialogFragment implements TextView.O
             deadlineDate.setMonth(month);
 
             String deadlineStr = sdFormatter.format(deadlineDate);
-            activity.onFinishEditDialog(etEditTitle.getText().toString(), deadlineStr, etEditNotes.getText().toString(), spEditStatus.getSelectedItem().toString(),spEditPriority.getSelectedItem().toString(), index);
+            activity.onFinishEditDialog(etEditTitle.getText().toString(), deadlineStr, etEditNotes.getText().toString(), spEditStatus.getSelectedItem().toString(),spEditPriority.getSelectedItem().toString(),  item_id, position);
             this.dismiss();
             return true;
         }
@@ -58,24 +59,27 @@ public class EditItemDialogFragment extends DialogFragment implements TextView.O
     }
 
     public interface EditItemDialogListener{
-        void onFinishEditDialog(String title, String deadline, String notes, String status, String priority, int index);
+        void onFinishEditDialog(String title, String deadline, String notes, String status, String priority, long index, int position);
     }
 
     public EditItemDialogFragment() {
     }
 
-    public static EditItemDialogFragment newInstance(String title, Date deadline, String status, String priority, String notes, int index){
+    public static EditItemDialogFragment newInstance(ToDoItem item, int index){
 
         EditItemDialogFragment frag = new EditItemDialogFragment();
         Bundle args = new Bundle();
-        args.putString("Title",title);
+        args.putString("Title",item.getTitle());
         SimpleDateFormat mySimpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
-        String deadlineStr = mySimpleDateFormat.format(deadline);
+        String deadlineStr = mySimpleDateFormat.format(item.getDeadline());
         args.putString("Deadline", deadlineStr);
-        args.putString("Status", status);
-        args.putString("Priority", priority);
-        args.putString("Notes", notes);
-        args.putInt("Index", index);
+        args.putString("Status", item.getStatus());
+        args.putString("Priority", item.getPriority());
+        args.putString("Notes", item.getNotes());
+        args.putInt("Position", index);
+        args.putLong("Item_Id", item.getItem_id());
+        item_id = item.getItem_id();
+        position = index;
 
         frag.setArguments(args);
 
@@ -105,7 +109,8 @@ public class EditItemDialogFragment extends DialogFragment implements TextView.O
         String status = getArguments().getString("Status");
         String priority = getArguments().getString("Priority");
         String deadline = getArguments().getString("Deadline");
-        index = getArguments().getInt("Index");
+        position = getArguments().getInt("Position");
+        item_id = getArguments().getLong("Item_Id");
         SimpleDateFormat sdfDeadline = new SimpleDateFormat("MM/dd/yyyy");
         Date deadlineDate = null;
         try{
@@ -146,7 +151,7 @@ public class EditItemDialogFragment extends DialogFragment implements TextView.O
                 deadlineDate.setMonth(month);
 
                 String deadlineStr = sdFormatter.format(deadlineDate);
-                activity.onFinishEditDialog(etEditTitle.getText().toString(), deadlineStr, etEditNotes.getText().toString(), spEditStatus.getSelectedItem().toString(),spEditPriority.getSelectedItem().toString(), index);
+                activity.onFinishEditDialog(etEditTitle.getText().toString(), deadlineStr, etEditNotes.getText().toString(), spEditStatus.getSelectedItem().toString(),spEditPriority.getSelectedItem().toString(), item_id, position);
                 getDialog().dismiss();
             }
         });
@@ -160,7 +165,6 @@ public class EditItemDialogFragment extends DialogFragment implements TextView.O
                 index = i;
             }
         }
-
         return index;
     }
 

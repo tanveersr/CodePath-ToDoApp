@@ -1,6 +1,9 @@
 package com.example.trandhawa.todoapp;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -13,8 +16,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-import org.apache.commons.io.FileUtils;
-import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements EditItemDialogFra
     private final int REQUEST_CODE_ADD = 20;
     private final int REQUEST_CODE_EDIT = 30;
     private static int editIndex;
+    private static SQLiteDatabase sqLiteDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,9 @@ public class MainActivity extends AppCompatActivity implements EditItemDialogFra
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        sqLiteDatabase = getBaseContext().openOrCreateDatabase("ToDoItems.db", MODE_PRIVATE, null);
+        sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS ToDoItems (title TEXT, deadline TEXT, notes TEXT, status TEXT, priority TEXT, item_id INTEGER PRIMARY KEY);");
+//        sqLiteDatabase.close();
         items = new ArrayList<ToDoItem>();
         readItems();
 //        itemsArrAdapter = new ArrayAdapter<ToDoItem>(this,android.R.layout.simple_list_item_1,items);
@@ -47,9 +52,9 @@ public class MainActivity extends AppCompatActivity implements EditItemDialogFra
 
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                removeFromDB(items.get(position).getItem_id());
                 items.remove(position);
                 itemsArrAdapter.notifyDataSetChanged();
-//                writeItems();
                 return true;
             }
         });
@@ -58,22 +63,20 @@ public class MainActivity extends AppCompatActivity implements EditItemDialogFra
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-//                Intent editScrnIntent = new Intent(MainActivity.this, EditItemActivity.class);
-//                editIndex = position;
-//                editScrnIntent.putExtra("ItemTitle", items.get(position).toString());
-//                startActivityForResult(editScrnIntent, REQUEST_CODE_EDIT);
                 showEditDialog(items.get(position), position);
-
             }
         });
+
+    }
+
+    private void removeFromDB(long id){
+        sqLiteDatabase.delete("ToDoItems", "item_id = " + id , null);
     }
 
     private void showEditDialog(ToDoItem i, int index){
         FragmentManager fragMan = getSupportFragmentManager();
-        EditItemDialogFragment edtItemFrag = EditItemDialogFragment.newInstance(i.getTitle(),i.getDeadline(),i.getStatus(),i.getPriority(),i.getNotes(),index);
+        EditItemDialogFragment edtItemFrag = EditItemDialogFragment.newInstance(i, index);
         edtItemFrag.show(fragMan, "fragment_edit_item");
-//        edtItemFrag.setTargetFragment(edtItemFrag, REQUEST_CODE_EDIT);
     }
 
     @Override
@@ -81,8 +84,6 @@ public class MainActivity extends AppCompatActivity implements EditItemDialogFra
         super.onActivityResult(requestCode, resultCode, data);
 
         if(resultCode == RESULT_OK && REQUEST_CODE_ADD == requestCode){
-
-//            ToDoItem editedItem = data.getExtras().getString("ItemTitle");
             ToDoItem editedItem = new ToDoItem();
             editedItem.setTitle(data.getStringExtra("Title"));
             String strDeadline = data.getStringExtra("Deadline");
@@ -90,18 +91,17 @@ public class MainActivity extends AppCompatActivity implements EditItemDialogFra
             Date deadlineDate = null;
             try{
                 deadlineDate = dtFormat.parse(strDeadline);
-            } catch(Exception e) {
-
-            }
+            } catch(Exception e) {}
 
             editedItem.setDeadline(deadlineDate);
             editedItem.setNotes(data.getStringExtra("Notes"));
             editedItem.setStatus(data.getStringExtra("Status"));
             editedItem.setPriority(data.getStringExtra("Priority"));
 
+            long id = writeNewItemToDB(editedItem);
+            editedItem.setItem_id(id);
             items.add(editedItem);
             itemsArrAdapter.notifyDataSetChanged();
-//            writeItems();
         }
     }
 
@@ -133,43 +133,75 @@ public class MainActivity extends AppCompatActivity implements EditItemDialogFra
     }
 
     private void readItems(){
-//        File filesDir = getFilesDir();
-//        File file = new File(filesDir, "ToDo.txt");
+
         try{
-//            items = new ArrayList<ToDoItem>(FileUtils.readLines(file));
-            items = SQLiteDatabaseHandler.getInstance(this).getAllItems();
-            Log.d("MainActivity", "No of items read: " + items.size());
+
+            String getQuery = "SELECT * FROM ToDoItems;";
+            Cursor cursor = sqLiteDatabase.rawQuery(getQuery, null);
+
+            if(cursor.moveToFirst()){
+                while(cursor.isAfterLast() == false){
+                    String title = cursor.getString(0);
+                    String deadline = cursor.getString(1);
+                    SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+                    Date newDate = sdf.parse(deadline);
+                    String notes = cursor.getString(2);
+                    String status = cursor.getString(3);
+                    String priority = cursor.getString(4);
+                    long item_id = cursor.getLong(cursor.getColumnIndex("item_id"));
+                    ToDoItem newItem = new ToDoItem();
+                    newItem.setTitle(title);
+                    newItem.setDeadline(newDate);
+                    newItem.setStatus(status);
+                    newItem.setPriority(priority);
+                    newItem.setNotes(notes);
+                    newItem.setItem_id(item_id);
+                    items.add(newItem);
+                    cursor.moveToNext();
+                }
+            }
+
+//            sqLiteDatabase.close();
         } catch(Exception e){
-            Log.d("MainActivity", "Exception while reading items from db: "+e);
+            Log.d ("MainActivity", "Exception while reading items from db: "+e);
         }
     }
 
-    private void writeItems(){
-        File filesDir = getFilesDir();
-        File file = new File(filesDir, "ToDo.txt");
-        try{
-            FileUtils.writeLines(file, items);
-        } catch(IOException e){
-            Log.d("MainActivity", "Exception while writing items to db: "+e);
-        }
+    private long writeNewItemToDB(ToDoItem item){
+
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+        ContentValues values = new ContentValues();
+        values.put("title", item.getTitle());
+        values.put("deadline", sdf.format(item.getDeadline()));
+        values.put("notes", item.getNotes());
+        values.put("status", item.getStatus());
+        values.put("priority", item.getPriority());
+
+        return sqLiteDatabase.insert("ToDoItems", null, values);
     }
 
     @Override
-    public void onFinishEditDialog(String title, String deadline, String notes, String status, String priority, int index) {
+    public void onFinishEditDialog(String title, String deadline, String notes, String status, String priority, long item_id, int index) {
+
+        ContentValues values = new ContentValues();
+        values.put("title",title);
+        values.put("deadline", deadline);
+        values.put("status", status);
+        values.put("priority", priority);
+        values.put("notes", notes);
+        sqLiteDatabase.update("ToDoItems", values, "item_id = " + item_id, null);
 
         items.get(index).setTitle(title);
         items.get(index).setNotes(notes);
         items.get(index).setStatus(status);
         items.get(index).setPriority(priority);
-        SimpleDateFormat simpDF = new SimpleDateFormat("MM/dd/yyyy");
-        Date deadlineModified = null;
-        try{
-            deadlineModified = simpDF.parse(deadline);
-        } catch(Exception e) {
-        }
 
-        items.get(index).setDeadline(deadlineModified);
+        Date deadlineDate = null;
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+        try{
+            deadlineDate = sdf.parse(deadline);
+        } catch (Exception e){}
+        items.get(index).setDeadline(deadlineDate);
         itemsArrAdapter.notifyDataSetChanged();
-//        writeItems();
     }
 }
