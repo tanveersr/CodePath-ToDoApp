@@ -28,7 +28,7 @@ The following **optional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-![YAP](http://imgur.com/4LEqung.gif)
+![YAP](http://imgur.com/6Cifm2V)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
