@@ -32,9 +32,22 @@ Here's a walkthrough of implemented user stories:
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
+## Project Analysis
+
+As part of your pre-work submission, please reflect on the app and answer the following questions below:
+
+**Question 1:** "What are your reactions to the Android app development platform so far? Compare and contrast Android's approach to layouts and user interfaces in past platforms you've used."
+
+**Answer:** I feel that the implementation of layouts in Android platform is quite developer-friendly. I like the fact that it provides variety of options for developer to choose from based on the specific need of the UI for their applications. Also, the high level of abstraction the framework provides makes it possible to construct the UI in far less time in an easy to define format (xml definition). Compared to the traditional ways of defining layouts for web development using html/css/js based frameworks the layouts in android platform are more well defined but they well meet the needs of the mobile app design.
+
+**Question 2:** "Take a moment to reflect on the `ArrayAdapter` used in your pre-work. How would you describe an adapter in this context and what is its function in Android? Why do you think the adapter is important? Explain the purpose of the `convertView` in the `getView` method of the `ArrayAdapter`."
+
+**Answer:** ArrayAdapter used in the pre-work plays the role of an interface linking the datastructure containing the intended contents to be populated in the list (in this case an ArrayList of ToDoItems) to the listview. By allowing user to define and pass a layout, the adapter decouples the logic of desigining the ui within the elements of the list. One can change the look of the listview elements simply by passing a different layout with no impact to the rest of the logic.
+The convertView allows us to reuse previously created view objects. Since, in a list view multiple elements will use the same view (for consistent rendering) convertView will allow using the same view object for subsequent elements in the list instead of creating new view objects each time. This improves the performance.
+
 ## License
 
-    Copyright [yyyy] [name of copyright owner]
+    Copyright [2017] [Tanveer Randhawa]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
