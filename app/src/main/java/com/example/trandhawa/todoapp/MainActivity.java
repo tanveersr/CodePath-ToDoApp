@@ -5,16 +5,13 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -22,14 +19,11 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity implements EditItemDialogFragment.EditItemDialogListener {
 
-    private static ArrayList<ToDoItem> items;
+    public static ArrayList<ToDoItem> items;
     ArrayAdapter<ToDoItem> itemsArrAdapter;
-    private EditText etNewItem;
     private ListView lvItems;
     private final int REQUEST_CODE_ADD = 20;
-    private final int REQUEST_CODE_EDIT = 30;
-    private static int editIndex;
-    private static SQLiteDatabase sqLiteDatabase;
+    public static SQLiteDatabase sqLiteDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,43 +34,11 @@ public class MainActivity extends AppCompatActivity implements EditItemDialogFra
 
         sqLiteDatabase = getBaseContext().openOrCreateDatabase("ToDoItems.db", MODE_PRIVATE, null);
         sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS ToDoItems (title TEXT, deadline TEXT, notes TEXT, status TEXT, priority TEXT, item_id INTEGER PRIMARY KEY);");
-//        sqLiteDatabase.close();
         items = new ArrayList<ToDoItem>();
         readItems();
-//        itemsArrAdapter = new ArrayAdapter<ToDoItem>(this,android.R.layout.simple_list_item_1,items);
         itemsArrAdapter = new ToDoArrayAdapter(this, items);
         lvItems = (ListView) findViewById(R.id.lvItems);
         lvItems.setAdapter(itemsArrAdapter);
-
-        lvItems.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
-
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                removeFromDB(items.get(position).getItem_id());
-                items.remove(position);
-                itemsArrAdapter.notifyDataSetChanged();
-                return true;
-            }
-        });
-
-        lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                showEditDialog(items.get(position), position);
-            }
-        });
-
-    }
-
-    private void removeFromDB(long id){
-        sqLiteDatabase.delete("ToDoItems", "item_id = " + id , null);
-    }
-
-    private void showEditDialog(ToDoItem i, int index){
-        FragmentManager fragMan = getSupportFragmentManager();
-        EditItemDialogFragment edtItemFrag = EditItemDialogFragment.newInstance(i, index);
-        edtItemFrag.show(fragMan, "fragment_edit_item");
     }
 
     @Override

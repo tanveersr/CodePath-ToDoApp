@@ -131,7 +131,7 @@ public class EditItemDialogFragment extends DialogFragment implements TextView.O
         spEditPriority.setSelection(getIndex(spEditPriority, priority));
 
         etEditTitle.requestFocus();
-        getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         btnEditSave = (Button) view.findViewById(R.id.btnEditSave);
         btnEditSave.setOnClickListener(new View.OnClickListener() {

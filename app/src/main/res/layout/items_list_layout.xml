@@ -1,34 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/listItemBackground">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Large Text"
-        android:id="@+id/tvTitleMain" />
+        android:id="@+id/tvTitleMain"
+        android:textColor="#000000"
+        android:typeface="monospace"
+        android:layout_marginTop="@dimen/activity_vertical_margin"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Medium Text"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Small Text"
         android:id="@+id/tvPriorityMain"
-        android:layout_below="@+id/tvTitleMain"
+        android:layout_alignBaseline="@+id/tvStatusMain"
+        android:layout_alignBottom="@+id/tvStatusMain"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginRight="29dp"
-        android:layout_marginEnd="29dp" />
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_marginRight="10dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Medium Text"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Small Text"
         android:id="@+id/tvStatusMain"
         android:layout_below="@+id/tvTitleMain"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="15dp" />
+
+    <Button
+        android:id="@+id/deleteItemButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="deleteItem"
+        android:drawableTop="@drawable/delete"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignLeft="@+id/tvPriorityMain"
+        android:layout_alignStart="@+id/tvPriorityMain"
+        android:layout_marginLeft="2dp"
+        android:layout_marginStart="2dp"
+        />
+
+    <Button
+        android:id="@+id/editItemButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onAdd"
+        android:drawableTop="@drawable/edit"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_marginRight="14dp"
+        android:layout_marginEnd="14dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/tvPriorityMain"
+        android:layout_alignEnd="@+id/tvPriorityMain" />
 </RelativeLayout>

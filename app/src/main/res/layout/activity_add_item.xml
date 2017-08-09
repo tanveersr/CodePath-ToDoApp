@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/listItemBackground"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -31,29 +32,27 @@
         android:layout_height="wrap_content"
         android:text="@string/Add_Deadline_Label"
         android:id="@+id/tvAddDeadline"
-        android:layout_marginTop="33dp"
-        android:layout_below="@+id/tvAddTitle"
-        android:layout_alignLeft="@+id/tvAddTitle"
-        android:layout_alignStart="@+id/tvAddTitle" />
+        android:layout_below="@+id/etTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/Add_Status_Label"
         android:id="@+id/tvAddStatus"
-        android:layout_marginBottom="39dp"
-        android:layout_above="@+id/tvAddPriority"
-        android:layout_alignLeft="@+id/tvAddNote"
-        android:layout_alignStart="@+id/tvAddNote" />
+        android:layout_alignTop="@+id/spStatus"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/Add_Priority_Label"
         android:id="@+id/tvAddPriority"
-        android:layout_above="@+id/btnSave"
-        android:layout_alignLeft="@+id/tvAddStatus"
-        android:layout_alignStart="@+id/tvAddStatus" />
+        android:layout_alignTop="@+id/spPriority"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <Button
         android:layout_width="wrap_content"
@@ -71,7 +70,8 @@
         android:layout_height="wrap_content"
         android:text="@string/Add_Notes_Label"
         android:id="@+id/tvAddNote"
-        android:layout_alignTop="@+id/etNotes"
+        android:layout_alignBaseline="@+id/etNotes"
+        android:layout_alignBottom="@+id/etNotes"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -79,31 +79,36 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/etTitle"
-        android:layout_alignTop="@+id/tvAddTitle"
-        android:layout_toRightOf="@+id/tvAddDeadline" />
+        android:layout_alignBaseline="@+id/tvAddTitle"
+        android:layout_alignBottom="@+id/tvAddTitle"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toRightOf="@+id/tvAddDeadline"
+        android:layout_toEndOf="@+id/tvAddDeadline" />
 
     <DatePicker
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/dpDeadline"
-        android:layout_toRightOf="@+id/tvAddDeadline"
         android:datePickerMode="calendar"
-        android:foregroundGravity="top|fill"
         android:calendarViewShown="true"
         android:scrollIndicators="start|right"
+        android:scaleX="0.6"
         android:scaleY="0.6"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_above="@+id/tvAddStatus"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:headerBackground="@color/datePickerBackground"/>
 
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/spPriority"
-        android:layout_below="@+id/tvAddStatus"
         android:spinnerMode="dropdown"
-        android:layout_alignLeft="@+id/dpDeadline"
-        android:layout_alignStart="@+id/dpDeadline"
-        android:entries="@array/spinnerPriority"/>
+        android:entries="@array/spinnerPriority"
+        android:layout_above="@+id/btnSave"
+        android:layout_toRightOf="@+id/tvAddPriority"
+        android:layout_toEndOf="@+id/tvAddPriority" />
 
     <Spinner
         android:layout_width="match_parent"
@@ -112,17 +117,26 @@
         android:spinnerMode="dialog"
         android:layoutMode="opticalBounds"
         android:gravity="top"
-        android:layout_alignTop="@+id/tvAddStatus"
-        android:layout_toRightOf="@+id/tvAddDeadline"
-        android:layout_toEndOf="@+id/tvAddDeadline"
-        android:entries="@array/spinnerStatus" />
+
+        android:entries="@array/spinnerStatus"
+        android:layout_marginBottom="37dp"
+        android:layout_above="@+id/btnSave"
+        android:layout_alignLeft="@+id/etNotes"
+        android:layout_alignStart="@+id/etNotes"
+        android:layout_toStartOf="@+id/btnSave"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/etNotes"
         android:layout_above="@+id/spStatus"
-        android:layout_toRightOf="@+id/tvAddNewTask"
-        android:layout_toEndOf="@+id/tvAddNewTask" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="25dp"
+        android:layout_toRightOf="@+id/tvAddPriority"
+        android:layout_toEndOf="@+id/tvAddPriority" />
+
 
 </RelativeLayout>

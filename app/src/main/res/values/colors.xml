@@ -3,4 +3,8 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="actionBarBackground">#00BCD4</color>
+    <color name="listItemBackground">#B2EBF2</color>
+    <color name="mainScreenBackground">#00ACC1</color>
+    <color name="datePickerBackground">#0097A7</color>
 </resources>

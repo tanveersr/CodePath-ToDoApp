@@ -6,7 +6,8 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin">
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/listItemBackground">
 
     <TextView
         android:layout_width="wrap_content"
@@ -40,10 +41,10 @@
         android:layout_height="wrap_content"
         android:text="@string/Add_Status_Label"
         android:id="@+id/tvEditStatus"
-        android:layout_marginBottom="39dp"
+        android:layout_marginBottom="11dp"
         android:layout_above="@+id/tvEditPriority"
-        android:layout_alignLeft="@+id/tvEditNote"
-        android:layout_alignStart="@+id/tvEditNote" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -70,7 +71,8 @@
         android:layout_height="wrap_content"
         android:text="@string/Add_Notes_Label"
         android:id="@+id/tvEditNote"
-        android:layout_alignTop="@+id/etEditNotes"
+        android:layout_alignBaseline="@+id/etEditNotes"
+        android:layout_alignBottom="@+id/etEditNotes"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -85,14 +87,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/dpEditDeadline"
-        android:layout_toRightOf="@+id/tvEditDeadline"
         android:datePickerMode="calendar"
         android:foregroundGravity="top|fill"
         android:calendarViewShown="true"
         android:scrollIndicators="start|right"
-        android:scaleY="0.6"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:scaleY="0.5"
+        android:layout_above="@+id/btnEditSave"
+        android:layout_toRightOf="@+id/tvEditDeadline"
+        android:layout_toEndOf="@+id/tvEditDeadline"
+        android:headerBackground="@color/datePickerBackground" />
 
     <Spinner
         android:layout_width="match_parent"
@@ -111,10 +114,13 @@
         android:spinnerMode="dialog"
         android:layoutMode="opticalBounds"
         android:gravity="top"
-        android:layout_alignTop="@+id/tvEditStatus"
-        android:layout_toRightOf="@+id/tvEditDeadline"
-        android:layout_toEndOf="@+id/tvEditDeadline"
-        android:entries="@array/spinnerStatus" />
+        android:entries="@array/spinnerStatus"
+        android:layout_above="@+id/spEditPriority"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="9dp"
+        android:layout_alignLeft="@+id/etEditNotes"
+        android:layout_alignStart="@+id/etEditNotes" />
 
     <EditText
         android:layout_width="match_parent"

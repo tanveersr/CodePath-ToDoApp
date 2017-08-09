@@ -10,37 +10,44 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.trandhawa.todoapp.SplashScreen"
-    tools:showIn="@layout/activity_splash_screen"
-    android:background="#4285F4">
+    tools:showIn="@layout/activity_splash_screen">
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:textAppearance="?android:attr/textAppearanceLarge"-->
+        <!--android:text="@string/splash_screen_label"-->
+        <!--android:id="@+id/textView"-->
+        <!--android:textColor="#f1eaea"-->
+        <!--android:textStyle="bold"-->
+        <!--android:textSize="38sp"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_alignParentEnd="true" />-->
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/splash_screen_label"
-        android:id="@+id/textView"
-        android:textColor="#f1eaea"
-        android:textStyle="bold"
-        android:textSize="38sp"
-        android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+    <!--<ImageView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/imageView"-->
+        <!--android:layout_alignTop="@+id/textView"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_alignParentStart="true" />-->
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView"
-        android:layout_alignTop="@+id/textView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/ivSplashScreen"
-        android:src="@drawable/notepad_icon"
-        android:layout_centerVertical="true"
-        android:layout_toLeftOf="@+id/textView"
-        android:layout_toStartOf="@+id/textView" />
+    <!--<ImageView-->
+        <!--android:id="@+id/ivSplashScreen"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_alignParentEnd="false"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_alignParentRight="false"-->
+        <!--android:layout_alignParentStart="false"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:layout_below="@+id/imageView"-->
+        <!--android:layout_centerHorizontal="false"-->
+        <!--android:layout_centerInParent="false"-->
+        <!--android:layout_centerVertical="false"-->
+        <!--android:layout_toLeftOf="@+id/textView"-->
+        <!--android:layout_toStartOf="@+id/textView"-->
+        <!--android:src="@drawable/notepad_icon" />-->
 
 </RelativeLayout>
